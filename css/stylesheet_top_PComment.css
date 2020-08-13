@@ -1,0 +1,105 @@
+
+body {
+	margin:0px;
+	background-color: rgba(0, 0, 0, 0);
+	font-family: 'Roboto Bold';
+	color:#FFFFFF;
+}
+
+#board {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:1280px;
+	height:99px;
+	overflow: hidden;
+}
+
+.comment1p{	background-image:url('../images/top_comment1p.png'); }
+.comment2p{	background-image:url('../images/top_comment2p.png'); }
+
+#pName11 , #pName21 , #pName11E , #pName21E{
+	width: 295px;
+	height:57px;
+	line-height: 57px;
+	font-size:26px;
+	font-family: 'Roboto BLACK','Noto Sans CJK JP BLACK';
+	text-align: center;
+	text-shadow: -1px -1px 0px #000000;
+	font-feature-settings : "palt" 1;
+	position:absolute;
+	left: 70px;
+	top: 33px;
+/*	border: green solid 1px; */
+}
+
+#pComm11 , #pComm21{
+	position:absolute;
+	width:840px;
+	height:60px;
+	line-height: 60px;
+	left: 370px;
+	top: 33px;
+	text-align: center;
+	color: #565454;
+	font-size: 23px;
+	font-family: 'Roboto Black','Noto Sans CJK JP Black';
+	text-shadow: -1px -1px 0px #fff;
+	overflow: hidden;
+	font-feature-settings : "palt" 1;
+
+/*	letter-spacing: -1px; */
+/*	border: green solid 1px; */
+}
+
+
+
+/*ì_ñ≈ópÇÃä÷êîìIÇ»Ç‡ÇÃ*/
+
+.blinking1 {
+    -webkit-animation: 0s linear 0s alternate none infinite running blink;
+    -moz-animation: 0s linear 0s alternate none infinite running blink;
+    animation: 6s linear 0.1s alternate none infinite running blink;
+}
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    33% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    33% { opacity: 1; }
+    66% { opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes blink {
+    0% { opacity: 1; }
+    45% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+.blinking2 {
+    -webkit-animation: 0s linear 0s alternate none infinite running blink2;
+    -moz-animation: 0s linear 0s alternate none infinite running blink2;
+    animation: 6s linear 0.1s alternate none infinite running blink2;
+}
+@-webkit-keyframes blink2 {
+    0% { opacity: 0; }
+    33% { opacity: 0; }
+    66% { opacity: 1; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes blink2 {
+    0% { opacity: 0; }
+    33% { opacity: 0; }
+    66% { opacity: 1; }
+    100% { opacity: 1; }
+}
+@keyframes blink2 {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    55% { opacity: 1; }
+    100% { opacity: 1; }
+}

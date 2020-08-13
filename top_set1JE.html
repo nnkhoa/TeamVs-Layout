@@ -1,0 +1,920 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/stylesheet_topJE.css" type="text/css" charset="utf-8">
+	<script src="js/jquery-2.0.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jstween-1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/countries.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+			
+			var timestampOld;
+			var timestamp;
+
+			var pTeam1;
+			var pName11;
+			var pName12;
+			var pName13;
+			var pName11E;
+			var pName12E;
+			var pName13E;
+
+			var pBox11;
+			var pBox12;
+			var pBox13;
+			var oldpBox11 = "";
+			var oldpBox12 = "";
+			var oldpBox13 = "";
+			var pScoreboard1;
+			var oldpScoreboard1 = "";
+			var P1 = "";
+
+			var pTeam2;
+			var pName21;
+			var pName22;
+			var pName23;
+			var pName21E;
+			var pName22E;
+			var pName23E;
+			var pBox21;
+			var pBox22;
+			var pBox23;
+			var oldpBox21 = "";
+			var oldpBox22 = "";
+			var oldpBox23 = "";
+
+			var pScoreboard2;
+			var oldpScoreboard2 = "";
+			var P2 = "";
+
+			var mText3;
+			var mText4;
+			
+			var xmlDoc;
+		
+			var xhr = new XMLHttpRequest();
+		
+			var animating = false;
+			var doUpdate = false;
+			
+			function init() {
+
+				xhr.overrideMimeType('text/xml');
+				
+				var timeout = this.window.setInterval(function() {
+					pollHandler();
+				}, 250);
+			
+				$('#pFlag1').opacity(0);
+				$('#pTeam1').html('');
+				$('#pName11').html('');
+				$('#pName12').html('');
+				$('#pName13').html('');
+				$('#pName11E').html('');
+				$('#pName12E').html('');
+				$('#pName13E').html('');
+				$('#pBox11').html('');
+				$('#pBox12').html('');
+				$('#pBox13').html('');
+				$('#pScoreboard1').html('');
+
+				$('#pTeam2').html('');
+				$('#pName21').html('');
+				$('#pName22').html('');
+				$('#pName23').html('');
+				$('#pName21E').html('');
+				$('#pName22E').html('');
+				$('#pName23E').html('');
+				$('#pBox21').html('');
+				$('#pBox22').html('');
+				$('#pBox23').html('');
+				$('#pScoreboard2').html('');
+
+				$('#mText3').html('');
+				$('#mText4').html('');
+				$('#board').tween({
+				   top:{
+					  start: '-300',
+					  stop: '0',
+					  units: 'px',
+					  time: 0,
+					  duration: 0.8,
+					  effect:'easeOut'
+				   }
+				});
+				
+				$.play();
+			}
+			
+			function pollHandler()
+			{
+			  loadData();
+			  if (timestamp != timestampOld) {
+				  doUpdate = true;
+			  }
+			  if (!animating && doUpdate) {
+				  updateBoard();
+			  }
+			}
+			
+			function loadData() {
+				xhr.open('GET', 'streamcontrol.xml');
+				xhr.send();
+				xhr.onreadystatechange = function(){
+						xmlDoc = xhr.responseXML;
+						
+
+						pName11 = getValueFromTag(xmlDoc,'pName11');
+						pName12 = getValueFromTag(xmlDoc,'pName12');
+						pName13 = getValueFromTag(xmlDoc,'pName13');
+						pName11E = getValueFromTag(xmlDoc,'pName11E');
+						pName12E = getValueFromTag(xmlDoc,'pName12E');
+						pName13E = getValueFromTag(xmlDoc,'pName13E');
+
+						pBox11 = getValueFromTag(xmlDoc,'pBox11');
+						pBox12 = getValueFromTag(xmlDoc,'pBox12');
+						pBox13 = getValueFromTag(xmlDoc,'pBox13');
+
+						pScoreboard1 = getValueFromTag(xmlDoc,'pScoreboard1');
+						P1 = getValueFromTag(xmlDoc,'P1');
+						pTeam1 = getValueFromTag(xmlDoc,'pTeam1');
+
+
+						pName21 = getValueFromTag(xmlDoc,'pName21');
+						pName22 = getValueFromTag(xmlDoc,'pName22');
+						pName23 = getValueFromTag(xmlDoc,'pName23');
+						pName21E = getValueFromTag(xmlDoc,'pName21E');
+						pName22E = getValueFromTag(xmlDoc,'pName22E');
+						pName23E = getValueFromTag(xmlDoc,'pName23E');
+
+						pBox21 = getValueFromTag(xmlDoc,'pBox21');
+						pBox22 = getValueFromTag(xmlDoc,'pBox22');
+						pBox23 = getValueFromTag(xmlDoc,'pBox23');
+
+						pScoreboard2 = getValueFromTag(xmlDoc,'pScoreboard2');
+						P2 = getValueFromTag(xmlDoc,'P2');
+						pTeam2 = getValueFromTag(xmlDoc,'pTeam2');
+
+
+						mText3 = getValueFromTag(xmlDoc,'mText3');
+						mText4 = getValueFromTag(xmlDoc,'mText4');						
+						timestampOld = timestamp;
+						timestamp = getValueFromTag(xmlDoc,'timestamp');
+						
+				}
+			}
+			
+			function updateBoard() {
+
+
+
+				if (oldpBox11 != pBox11) {
+					animating = true;
+
+					$('#pBox11').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox11').css({'background-image':'url(images/top_1p_'+pBox11+'.png)'});
+					oldpBox11 = pBox11;
+						}
+					});
+					
+					$('#pBox11').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+
+				if (oldpBox12 != pBox12) {
+					animating = true;
+
+					$('#pBox12').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox12').css({'background-image':'url(images/top_1p_'+pBox12+'.png)'});
+					oldpBox12 = pBox12;
+						}
+					});
+					
+					$('#pBox12').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+
+				if (oldpBox13 != pBox13) {
+					animating = true;
+
+					$('#pBox13').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox13').css({'background-image':'url(images/top_1p_'+pBox13+'.png)'});
+					oldpBox13 = pBox13;
+						}
+					});
+					
+					$('#pBox13').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+				if (oldpBox21 != pBox21) {
+					animating = true;
+
+					$('#pBox21').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox21').css({'background-image':'url(images/top_2p_'+pBox21+'.png)'});
+					oldpBox21 = pBox21;
+						}
+					});
+					
+					$('#pBox21').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+
+				if (oldpBox22 != pBox22) {
+					animating = true;
+
+					$('#pBox22').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox22').css({'background-image':'url(images/top_2p_'+pBox22+'.png)'});
+					oldpBox22 = pBox22;
+						}
+					});
+					
+					$('#pBox22').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+				if (oldpBox23 != pBox23) {
+					animating = true;
+
+					$('#pBox23').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+					$('#pBox23').css({'background-image':'url(images/top_2p_'+pBox23+'.png)'});
+					oldpBox23 = pBox23;
+						}
+					});
+					
+					$('#pBox23').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+
+				}
+
+
+
+				if ($('#pName11').html() != pName11) {
+					animating = true;
+					$('#pName11').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName11').html(pName11);
+						}
+					});
+					
+					$('#pName11').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName12').html() != pName12) {
+					animating = true;
+					$('#pName12').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName12').html(pName12);
+						}
+					});
+					
+					$('#pName12').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName13').html() != pName13) {
+					animating = true;
+					$('#pName13').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName13').html(pName13);
+						}
+					});
+					
+					$('#pName13').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+
+
+				if ($('#pName11E').html() != pName11E) {
+					animating = true;
+					$('#pName11E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName11E').html(pName11E);
+						}
+					});
+					
+					$('#pName11E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName12E').html() != pName12E) {
+					animating = true;
+					$('#pName12E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName12E').html(pName12E);
+						}
+					});
+					
+					$('#pName12E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName13E').html() != pName13E) {
+					animating = true;
+					$('#pName13E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName13E').html(pName13E);
+						}
+					});
+					
+					$('#pName13E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+
+
+
+				if ($('#pName21').html() != pName21) {
+					animating = true;
+					$('#pName21').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName21').html(pName21);
+						}
+					});
+					
+					$('#pName21').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName22').html() != pName22) {
+					animating = true;
+					$('#pName22').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName22').html(pName22);
+						}
+					});
+					
+					$('#pName22').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName23').html() != pName23) {
+					animating = true;
+					$('#pName23').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName23').html(pName23);
+						}
+					});
+					
+					$('#pName23').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+
+
+
+				if ($('#pName21E').html() != pName21E) {
+					animating = true;
+					$('#pName21E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName21E').html(pName21E);
+						}
+					});
+					
+					$('#pName21E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName22E').html() != pName22E) {
+					animating = true;
+					$('#pName22E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName22E').html(pName22E);
+						}
+					});
+					
+					$('#pName22E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pName23E').html() != pName23E) {
+					animating = true;
+					$('#pName23E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName23E').html(pName23E);
+						}
+					});
+					
+					$('#pName23E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+
+
+
+
+				
+
+				if ($('#pTeam1').html() != pTeam1) {
+					animating = true;
+					$('#pTeam1').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pTeam1').html(pTeam1);
+						}
+					});
+					
+					$('#pTeam1').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#pTeam2').html() != pTeam2) {
+					animating = true;
+					$('#pTeam2').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pTeam2').html(pTeam2);
+						}
+					});
+					
+					$('#pTeam2').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+
+
+
+				
+				if ($('#mText3').html() != mText3) {
+					animating = true;
+					$('#mText3').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#mText3').html(mText3);
+						}
+					});
+					
+					$('#mText3').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+				if ($('#mText4').html() != mText4) {
+					animating = true;
+					$('#mText4').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#mText4').html(mText4);
+						}
+					});
+					
+					$('#mText4').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+
+				
+				
+				$.play();
+				
+				doUpdate = false;
+			}
+			
+			function getValueFromTag (xmlDoc,tag) {
+				if (xmlDoc.getElementsByTagName(tag).length != 0 ) {
+					if (xmlDoc.getElementsByTagName(tag)[0].childNodes.length == 0) {
+							return '';
+						} else {
+							return xmlDoc.getElementsByTagName(tag)[0].childNodes[0].nodeValue;
+					}
+				} else {
+					return '';
+				}
+			}
+			
+			function getCountry (country) {
+			
+			var count = iso.findCountryByName(country);
+			if (!count)
+			count = iso.findCountryByCode(country);
+			if (!count) {
+			var count = new Array();
+			count['value'] = "unknown";
+			}
+			
+			return count['value'];
+		}
+	</script>
+</head>
+<body onLoad="init()">
+	<div id="board">
+
+
+		<div id="pTeam1"></div>
+		<div id="pBox11"></div>
+		<div id="pName11" class="blinking1"></div>
+		<div id="pName11E" class="blinking2"></div>
+		
+		<div id="pBox12"></div>
+		<div id="pName12" class="blinking1"></div>
+		<div id="pName12E" class="blinking2"></div>
+		
+		<div id="pBox13"></div>
+		<div id="pName13" class="blinking1"></div>
+		<div id="pName13E" class="blinking2"></div>
+
+		<div id="pScoreboard1"></div>
+		<div id="P1"></div>
+
+
+		<div id="pTeam2"></div>
+		<div id="pBox21"></div>
+		<div id="pName21" class="blinking1"></div>
+		<div id="pName21E" class="blinking2"></div>
+		
+		<div id="pBox22"></div>
+		<div id="pName22" class="blinking1"></div>
+		<div id="pName22E" class="blinking2"></div>
+		
+		<div id="pBox23"></div>
+		<div id="pName23" class="blinking1"></div>
+		<div id="pName23E" class="blinking2"></div>
+
+		<div id="pScoreboard2"></div>
+		<div id="P2"></div>
+
+
+		<div id="mText3"></div>
+	        <div id="mText4"></div>
+	</div>
+</body>
+</html>

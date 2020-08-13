@@ -1,0 +1,57 @@
+body {
+	margin:0px;
+	background-color: rgba(0, 0, 0, 0);
+	font-family: 'Roboto Medium','Noto Sans CJK JP Medium';
+	color:#FFFFFF;
+}
+
+#board {
+	position:absolute;
+	top:580px;
+	left:0px;
+	width:1280px;
+	height:120px;
+	background-image:url(../images/top_name5.png);
+}
+
+#mComm3 {
+	color: #333;
+	overflow:hidden;
+	position:absolute;
+	left:220px;
+	top:39px;
+	height:40px;
+	line-height: 40px;
+	width:955px;
+	font-size:28px;
+	font-family: 'Roboto Black','Noto Sans CJK JP Black';
+	text-align:center;
+	font-feature-settings : "palt" 1;
+	text-shadow: 1px 1px 1px #fff;
+/*	border: green solid 1px; */
+}
+
+
+#board2 {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:1280px;
+	height:55px;
+	background-image:url(../images/commentary_title.png);
+}
+
+#mTitle1 {
+	color: #fff;
+	overflow:hidden;
+	position:absolute;
+	left:300px;
+	top:6px;
+	height:40px;
+	line-height: 40px;
+	width:680px;
+	font-size:26px;
+	font-family: 'Roboto Medium','Noto Sans CJK JP Black';
+	text-align:center;
+	text-shadow: 1px 1px 1px #000;
+}

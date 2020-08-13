@@ -1,0 +1,8 @@
+<!DOCTYPE StreamControl>
+<settings>
+ <altHotkeyHandling>0</altHotkeyHandling>
+ <format>1</format>
+ <layoutPath>C:\top5\browserfiles_layout.xml</layoutPath>
+ <outputPath>C:\top5\</outputPath>
+ <useCDATA>0</useCDATA>
+</settings>

@@ -1,0 +1,225 @@
+<html>
+<head>
+	<link rel="stylesheet" href="css/stylesheet_top_PComment.css" type="text/css" charset="utf-8">
+	<script src="js/jquery-2.0.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jstween-1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/countries.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+			
+			var timestampOld;
+			var timestamp;
+
+			var pName21;
+			var pName21E;
+
+			var pComm21;
+
+			var xmlDoc;
+		
+			var xhr = new XMLHttpRequest();
+		
+			var animating = false;
+			var doUpdate = false;
+			
+			function init() {
+
+				xhr.overrideMimeType('text/xml');
+				
+				var timeout = this.window.setInterval(function() {
+					pollHandler();
+				}, 0);
+			
+				$('#pName21').html('');
+				$('#pName21E').html('');
+
+				$('#pComm21').html('');
+
+
+				$('#board').tween({
+				   top:{
+					  start: '600',
+					  stop: '600',
+					  units: 'px',
+					  time: 0,
+					  duration: 0.8,
+					  effect:'easeOut'
+				   }
+				});
+				
+				$.play();
+			}
+			
+			function pollHandler()
+			{
+			  loadData();
+			  if (timestamp != timestampOld) {
+				  doUpdate = true;
+			  }
+			  if (!animating && doUpdate) {
+				  updateBoard();
+			  }
+			}
+			
+			function loadData() {
+				xhr.open('GET', 'streamcontrol.xml');
+				xhr.send();
+				xhr.onreadystatechange = function(){
+						xmlDoc = xhr.responseXML;
+						
+
+						pName21 = getValueFromTag(xmlDoc,'pName21');
+						pName21E = getValueFromTag(xmlDoc,'pName21E');
+
+						pComm21 = getValueFromTag(xmlDoc,'pComm21');
+
+						timestampOld = timestamp;
+						timestamp = getValueFromTag(xmlDoc,'timestamp');
+						
+				}
+			}
+			
+			function updateBoard() {
+
+
+
+
+
+
+				if ($('#pName21').html() != pName21) {
+					animating = true;
+					$('#pName21').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName21').html(pName21);
+						}
+					});
+					
+					$('#pName21').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+
+				if ($('#pName21E').html() != pName21E) {
+					animating = true;
+					$('#pName21E').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pName21E').html(pName21E);
+						}
+					});
+					
+					$('#pName21E').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+
+
+				if ($('#pComm21').html() != pComm21) {
+					animating = true;
+					$('#pComm21').tween({
+						opacity: {
+						  start: 100,
+						  stop: 0,
+						  time: 0,
+						  duration: 0.5,
+						  effect: 'easeIn'
+						},
+						onStop: function(){
+							$('#pComm21').html(pComm21);
+						}
+					});
+					
+					$('#pComm21').tween({
+						opacity: {
+						  start: 0,
+						  stop: 100,
+						  time: 0.5,
+						  duration: 0.5,
+						  effect: 'easeOut'
+						},
+						onStop: function(){
+							animating = false;
+						}
+					});
+				}
+				
+
+				
+				
+				$.play();
+				
+				doUpdate = false;
+			}
+			
+			function getValueFromTag (xmlDoc,tag) {
+				if (xmlDoc.getElementsByTagName(tag).length != 0 ) {
+					if (xmlDoc.getElementsByTagName(tag)[0].childNodes.length == 0) {
+							return '';
+						} else {
+							return xmlDoc.getElementsByTagName(tag)[0].childNodes[0].nodeValue;
+					}
+				} else {
+					return '';
+				}
+			}
+			
+			function getCountry (country) {
+			
+			var count = iso.findCountryByName(country);
+			if (!count)
+			count = iso.findCountryByCode(country);
+			if (!count) {
+			var count = new Array();
+			count['value'] = "unknown";
+			}
+			
+			return count['value'];
+		}
+	</script>
+</head>
+<body onLoad="init()">
+	<div id="board" class="comment2p">
+
+
+		<div id="pName21" class="blinking1"></div>
+		<div id="pName21E" class="blinking2"></div>
+
+
+
+		<div id="pComm21"></div>
+
+
+	</div>
+</body>
+</html>
